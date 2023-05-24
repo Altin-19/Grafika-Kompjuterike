@@ -25,6 +25,7 @@ function generateSquareMaze(dimension) {
         }
     }
 
+
     // Initialize the field.
     var field = new Array(dimension);
     field.dimension = dimension;
@@ -34,6 +35,8 @@ function generateSquareMaze(dimension) {
             field[i][j] = true;
         }
     }
+    
+    
 
     // Gnerate the maze recursively.
     field = iterate(field, 1, 1);

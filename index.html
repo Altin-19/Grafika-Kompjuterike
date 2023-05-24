@@ -21,11 +21,11 @@
                 mazeDimension  = 11,
                 planeMesh      = undefined,
                 ballMesh       = undefined,
-                ballRadius     = 0.25,
+                ballRadius     = 0.30,
                 keyAxis        = [0, 0],
-                ironTexture    = THREE.ImageUtils.loadTexture('/ball.png'),
-                planeTexture   = THREE.ImageUtils.loadTexture('/concrete.png'),
-                brickTexture   = THREE.ImageUtils.loadTexture('/brick.png'),
+                ironTexture    = THREE.ImageUtils.loadTexture('/ball1.jpg'),
+                planeTexture   = THREE.ImageUtils.loadTexture('/concrete2.png'),
+                brickTexture   = THREE.ImageUtils.loadTexture('/brick2.png'),
                 gameState      = undefined,
 
             // Box2D shortcuts
@@ -55,7 +55,7 @@
                 var fixDef = new b2FixtureDef();
                 fixDef.density = 1.0;
                 fixDef.friction = 0.0;
-                fixDef.restitution = 0.25;
+                fixDef.restitution = 0.30;
                 fixDef.shape = new b2CircleShape(ballRadius);
                 wBall.CreateFixture(fixDef);
 
@@ -84,7 +84,7 @@
                             var mesh_ij = new THREE.Mesh(geometry);
                             mesh_ij.position.x = i;
                             mesh_ij.position.y = j;
-                            mesh_ij.position.z = 0.5;
+                            mesh_ij.position.z = 0.6;
                             THREE.GeometryUtils.merge(dummy, mesh_ij);
                         }
                     }
@@ -162,22 +162,22 @@
 
                 // Update ball rotation.
                 var tempMat = new THREE.Matrix4();
-                tempMat.makeRotationAxis(new THREE.Vector3(0,1,0), stepX/ballRadius);
+                tempMat.makeRotationAxis(new THREE.Vector3(0,0,1), stepX/ballRadius);
                 tempMat.multiplySelf(ballMesh.matrix);
                 ballMesh.matrix = tempMat;
                 tempMat = new THREE.Matrix4();
-                tempMat.makeRotationAxis(new THREE.Vector3(1,0,0), -stepY/ballRadius);
+                tempMat.makeRotationAxis(new THREE.Vector3(0,1,0), -stepY/ballRadius);
                 tempMat.multiplySelf(ballMesh.matrix);
                 ballMesh.matrix = tempMat;
                 ballMesh.rotation.getRotationFromMatrix(ballMesh.matrix);
                 
                 // Update camera and light positions.
-                camera.position.x += (ballMesh.position.x - camera.position.x) * 0.1;
+                camera.position.x += (ballMesh.position.x - camera.position.x) * 0.5;
                 camera.position.y += (ballMesh.position.y - camera.position.y) * 0.1;
                 camera.position.z += (5 - camera.position.z) * 0.1;
                 light.position.x = camera.position.x;
                 light.position.y = camera.position.y;
-                light.position.z = camera.position.z - 3.7;
+                light.position.z = camera.position.z - 3.4;
             }
 
 
@@ -194,7 +194,7 @@
                         light.position.set(1, 1, 1.3);
                         light.intensity = 0;
                         var level = Math.floor((mazeDimension-1)/2 - 4);
-                        $('#level').html('Level ' + level);
+                        $('#level').html('Leveli ' + level);
                         gameState = 'fade in';
                         break;
                         
@@ -239,6 +239,8 @@
 
             }
 
+
+            
 
             function onResize() {
                 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -314,7 +316,7 @@
                 background: black;
                 margin: 0;
                 padding: 0;
-                font-family: 'Helvetica';
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             }
             
             #instructions {
@@ -340,8 +342,9 @@
                 left: 0px;
                 top: 0px;
                 padding: 4px;
-                color: yellow;   
+                color: rgb(232, 30, 46);   
                 font-weight: bold;
+                font-family: Verdana;
             }
 
         </style>
@@ -351,19 +354,18 @@
     <body>
     
     <div id='instructions'>
-        How to play Astray:
+        Si te luajme Astray:
         <br><br>
-        Use the arrow keys to move the ball and find the exit to the maze.
-        <br><br>
+        Përdorni tastet e shigjetave për të lëvizur topin dhe për të gjetur daljen në labirint.        <br><br>
         Vim trainees: h, j, k, l
     </div>
     
     <div id='help'>
-        Hold down the 'I' key for instructions.
+        Shtypni shkrojen 'I' per instruksione.
     </div>
 
     <div id='level'>
-        Level 1
+        Leveli 1
     </div>
     
     </body>
